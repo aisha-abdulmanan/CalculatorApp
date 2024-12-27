@@ -30,7 +30,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.kotlinapp.Calculator
 import com.example.kotlinapp.R
 
 
@@ -94,7 +93,7 @@ fun CalculatorUI_Preview(){
 fun CalculatorButtonS(btn : String, onClick : ()-> Unit){
     Box(modifier = Modifier.padding(4.dp)) {
         FloatingActionButton(
-            onClick = { },
+            onClick = onClick,
             modifier = Modifier.size(65.dp),
             containerColor = getColorS(btn)
         ) {

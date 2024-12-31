@@ -108,6 +108,10 @@ class CalculatorViewModel : ViewModel() {
     }
     private fun addOperator(symbol: String, lastChar: Char?) {
         // Avoid consecutive operators
+        if (lastChar != null && lastChar in OPERATORS) {
+            _equationText.value = _equationText.value?.dropLast(1) + symbol
+            return
+        }
         if (lastChar != null && (lastChar in NUMBERS || lastChar in listOf(')', '!', '%'))) {
             if (symbol != "^") {
                 _equationText.value = (_equationText.value ?: "") + symbol
@@ -145,6 +149,7 @@ class CalculatorViewModel : ViewModel() {
     }
 
     // Helper function to launch a coroutine for evaluating the expression
+    @Suppress("Unused")
     fun evaluateExpressionInBackground(parser: Parsable, onResult: () -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -159,7 +164,7 @@ class CalculatorViewModel : ViewModel() {
                     // Call the callback once the result is available
                     onResult()
                 }
-            } catch (e: Exception) {
+            } catch (e: Exception) { // You can catch the exception and leave it unused
                 // Handle any errors and show error message
                 withContext(Dispatchers.Main) {
                     _resultText.value = "ERROR"
